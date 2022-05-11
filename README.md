@@ -13,3 +13,7 @@ pip install -r requirements.txt
 ```
 python manage.py runserver
 ```
+ 
+Open [this link](http://127.0.0.1:8000/login/) for login entry view for the whole website.
+
+Open [this link](http://127.0.0.1/) for look up there data tables including username and passwords.

@@ -3,6 +3,8 @@
 ## Environments Setup
 
 ```
+git clone https://github.com/XIRZC/SLQMS.git
+cd SLQMS # change directory to SLQMS
 conda create -n django python=3.8
 conda activate django
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple

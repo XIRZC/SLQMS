@@ -10,19 +10,18 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/font.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 	<link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/xadmin.js' %}"></script>
 </head>
-<body>
+<body class="index">
     <!-- 以下隐藏input是为了实现jsp全局变量引入到js中便于layui url传值 -->
 	<input type="hidden" id="cid" value="{{class.id}}">
     <!-- 顶部开始 -->
     <div class="container">
         <div class="logo">
-            <a href="{% url 'xadmin:teachclass' teacher.id %}">学生学习质量监测系统/a>
+            <a href="{% url 'xadmin:teachclass' teacher.id %}">学生学习质量监测系统 </a>
         </div>
         <ul class="layui-nav right" lay-filter="">
             <li class="layui-nav-item">
@@ -67,7 +66,7 @@
 	      var $$=layui.jquery;
 	      table.render({
 	        elem: '#test'
-	        ,url:'/studentapi/' + cid
+	        ,url:'/studentsapi/' + cid
 	        ,title: '用户数据表'
 	        ,cols: [[
 	          {field:'id', title:'学号',  fixed: 'left', unresize: true, sort: true}

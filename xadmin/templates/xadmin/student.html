@@ -10,7 +10,6 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/font.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 	<link rel="stylesheet" href="{% static 'css/xadmin.css' %}">
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'lib/layui/layui.js' %}"></script>
@@ -18,16 +17,16 @@
 </head>
 <body>
     <!-- 以下隐藏input是为了实现jsp全局变量引入到js中便于layui url传值 -->
-	<input type="hidden" id="tid" value="{{teacher.id}}">
+	<input type="hidden" id="sid" value="{{student.id}}">
     <!-- 顶部开始 -->
     <div class="container">
         <div class="logo">
-            <a href="{% url 'xadmin:teachclass' teacher.id %}">学生学习质量监测系统/a>
+            <a href="{% url 'xadmin:student' student.id %}">学生学习质量监测系统 </a>
         </div>
         <ul class="layui-nav right" lay-filter="">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    {{teacher.info}}
+                    {{student.info}}
                 </a>
                 <dl class="layui-nav-child">
                     <!-- 二级菜单 -->
@@ -40,7 +39,7 @@
                 </dl>
             </li>
             <li class="layui-nav-item to-index">
-                <a href="{% url 'xadmin:teachclass' teacher.id %}">首页</a>
+                <a href="{% url 'xadmin:student' student.id %}">首页</a>
             </li>
         </ul>
     </div>
@@ -48,53 +47,50 @@
     <!-- 中部开始 -->
     <!-- 右侧主体开始 -->
     <div>
-	    <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a><cite>我的授课</cite></a>
-            </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
-            <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space5">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <blockquote class="layui-elem-quote">
+                                你的学习质量评级为:{{student.level}}
+                            </blockquote>
+	                        <table class="layui-hide" id="test" lay-filter="test"></table>   
+                            <blockquote class="layui-elem-quote">
+                                建议：{{student.advice}}
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-	    <table class="layui-hide" id="test" lay-filter="test"></table>   
 	
-	    <script type="text/html" id="barDemo">
-     		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="table">表格</a>
-     		<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="chart">图表</a>
-	    </script>           
-	 
 	    <script>
 	    layui.use(['table','jquery'], function(){
 	      //jquery取值
-	      var tid = $("#tid").val();
+	      var sid = $("#sid").val();
         
 	      var table = layui.table;  
 	      var $$=layui.jquery;
 	      table.render({
 	        elem: '#test'
-	        ,url:'/teachclassapi/' + tid
+	        ,url:'/studentapi/' + sid
 	        ,title: '用户数据表'
 	        ,cols: [[
-	          {field:'id', title:'班级编号',  fixed: 'left', unresize: true, sort: true}
-	          ,{field:'name', title:'班级名称'}
-	          ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+	          {field:'id', title:'学号',  fixed: 'left', unresize: true, sort: true}
+	          ,{field:'name', title:'姓名'}
+	          ,{field:'video_watching_counts', title:'视频观看个数'}
+	          ,{field:'video_watching_seconds', title:'视频观看时长'}
+	          ,{field:'course_discuss_related', title:'相关评论数'}
+	          ,{field:'course_discuss_unrelated', title:'无关评论数'}
+	          ,{field:'discuss_topic_numbers', title:'评论区主题数'}
+	          ,{field:'discussion_comment_and_reply_numbers', title:'讨论区评论和回复数'}
+	          ,{field:'spoc_score', title:'慕课成绩'}
+	          ,{field:'test_mean', title:'单元测试平均成绩'}
+	          ,{field:'level', title:'学习质量等级'}
 	        ]]
 	        ,page: true
 	      });
-      
-	      //监听行工具事件
-	      table.on('tool(test)', function(obj){
-	    	var data=obj.data
-            if (data.event === 'table') {
-	            var urlval='/teachclass/' + tid + '/class/' + data.id + '/table/'
-            }
-            else {
-	            var urlval='/teachclass/' + tid + '/class/' + data.id + '/chart/'
-            }
-    		$$.get(urlval,{},
-    			function(data,status){
-    				window.location.href = urlval;
-    		});
-	      });	//table.on结束
 	    });	//layui.use结束
 	    </script>
     </div>

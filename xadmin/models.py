@@ -34,6 +34,7 @@ class Student(models.Model):
     spoc_score = models.FloatField()
     test_mean = models.FloatField()
     cid = models.ForeignKey(Class, on_delete=models.CASCADE)
+    level = models.CharField(max_length=10, null=True, blank=True)
     class Meta:
         db_table = 'student'
         ordering = ['id']

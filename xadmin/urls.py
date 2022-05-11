@@ -23,5 +23,6 @@ urlpatterns = [
     path('teachclass/<int:tid>/class/<int:cid>/table/', views.TeachStudentTableView, name='teachstudenttable'),
     path('teachclass/<int:tid>/class/<int:cid>/chart/', views.TeachStudentChartView, name='teachstudentchart'),
     path('student/<int:sid>/', views.StudentView, name='student'),
-    path('studentapi/<int:cid>/', views.StudentAPI, name='studentapi'),
+    path('studentapi/<int:sid>/', views.StudentAPI, name='studentapi'),
+    path('studentsapi/<int:cid>/', views.StudentsAPI, name='studentsapi'),
 ]

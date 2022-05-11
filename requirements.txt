@@ -6,3 +6,4 @@ djangorestframework==3.11.2
 jupyterlab
 seaborn
 pandas
+coreapi

@@ -35,6 +35,7 @@ class Student(models.Model):
     test_mean = models.FloatField()
     cid = models.ForeignKey(Class, on_delete=models.CASCADE)
     level = models.CharField(max_length=10, null=True, blank=True)
+    advice = models.CharField(max_length=255, null=True, blank=True)
     class Meta:
         db_table = 'student'
         ordering = ['id']

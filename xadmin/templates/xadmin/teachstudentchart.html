@@ -49,6 +49,12 @@
     <!-- 中部开始 -->
     <!-- 右侧主体开始 -->
     <div>
+	    <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="{% url 'xadmin:teachclass' teacher.id %}" >所授班级</a>
+                <a><cite>{{class.name}}</cite></a>
+            </span>
+        </div>
         <div class="layui-fluid">
             <div class="layui-row layui-col-space5">
                 <div class="layui-col-md12">
@@ -61,46 +67,49 @@
             </div>
         </div>
         <script>
-            var chartDom = document.getElementById('main');
-            var myChart = echarts.init(chartDom);
-            var option;
-
-            option = {
-              title: {
-                text: 'Referer of a Website',
-                subtext: 'Fake Data',
-                left: 'center'
-              },
-              tooltip: {
-                trigger: 'item'
-              },
-              legend: {
-                orient: 'vertical',
-                left: 'left'
-              },
-              series: [
-                {
-                  name: 'Access From',
-                  type: 'pie',
-                  radius: '50%',
-                  data: [
-                    { value: 1048, name: 'Search Engine' },
-                    { value: 735, name: 'Direct' },
-                    { value: 580, name: 'Email' },
-                    { value: 484, name: 'Union Ads' },
-                    { value: 300, name: 'Video Ads' }
-                  ],
-                  emphasis: {
-                    itemStyle: {
-                      shadowBlur: 10,
-                      shadowOffsetX: 0,
-                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+	          var cid = $("#cid").val();
+            $.get('/studentsapi/' + cid).done(function(data) {
+              console.log(data.statistics)
+              var chartDom = document.getElementById('main');
+              var myChart = echarts.init(chartDom);
+              myChart.setOption({
+                title: {
+                  text: '学习质量饼状图',
+                  subtext: '不合格(<70)/良好(70-85)/优秀(>85)',
+                  left: 'center'
+                },
+                tooltip: {
+                  trigger: 'item',
+                  formatter: "{d}%",
+                },
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
+                series: [
+                  {
+                    name: '学习质量等级',
+                    type: 'pie',
+                    radius: '50%',
+                    data: data.statistics,
+                    // data: [
+                    //   { value: 1048, name: 'Search Engine' },
+                    //   { value: 735, name: 'Direct' },
+                    //   { value: 580, name: 'Email' },
+                    //   { value: 484, name: 'Union Ads' },
+                    //   { value: 300, name: 'Video Ads' }
+                    // ],
+                    emphasis: {
+                      itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      }
                     }
                   }
-                }
-              ]
-            };
-            option && myChart.setOption(option);
+                ]
+              });
+            })
         </script>
     </div>
     <div class="page-content-bg"></div>
